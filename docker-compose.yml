@@ -1,12 +1,18 @@
 version: "3.9"
 services:
   mongodb:
-    image: mongo:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.mongodb
     container_name: mongodb
-    ports:
-      - "27017:27017"
+    command: mongod --auth
+    env_file:
+      - .env
     volumes:
       - mongodb_data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d
+    ports:
+      - "27017:27017"
 
   postgres:
     image: postgres:latest
