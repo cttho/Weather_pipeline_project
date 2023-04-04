@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  airflow:
+    image: apache/airflow:2.2.4
+    container_name: airflow
+    depends_on:
+      - mongodb
+    env_file:
+      - .env
+    volumes:
+      - ./dags:/opt/airflow/dags
+    ports:
+      - "8080:8080"
+
+  jupyter-pyspark:
+    image: jupyter/pyspark-notebook:latest
+    container_name: jupyter-pyspark
+    depends_on:
+      - mongodb
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/home/jovyan/work
+      - ./data:/home/jovyan/data
+
+volumes:
+  mongodb_data:
