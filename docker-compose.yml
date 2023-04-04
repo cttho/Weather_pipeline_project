@@ -8,15 +8,32 @@ services:
     volumes:
       - mongodb_data:/data/db
 
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
   airflow:
     image: apache/airflow:2.2.4
     container_name: airflow
     depends_on:
       - mongodb
+      - postgres
     env_file:
       - .env
+    environment:
+      - LOAD_EX=n
+    entrypoint: /bin/bash -c "/opt/airflow/scripts/entrypoint.sh || true && airflow webserver"
     volumes:
       - ./dags:/opt/airflow/dags
+      - ./scripts:/opt/airflow/scripts
     ports:
       - "8080:8080"
 
@@ -33,3 +50,4 @@ services:
 
 volumes:
   mongodb_data:
+  postgres_data:
