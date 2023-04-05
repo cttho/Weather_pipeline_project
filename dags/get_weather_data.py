@@ -3,7 +3,7 @@ import requests
 import pandas as pd
 from datetime import datetime, timedelta
 
-API_KEY = "."
+API_KEY = os.environ['OPENWEATHER_API_KEY']
 LOCATION_DICT = {"1566083": "Ho Chi Minh", "1581130": "Ha Noi", "1580240": "Hue"}
 
 # The OpenWeather API endpoint for historical data
@@ -38,7 +38,8 @@ def save_weather_data(df, output_file):
 
 def main():
     current_date = datetime.now().strftime("%Y-%m-%d_%H")
-    output_file = f"{current_date}_weather_data.csv"
+    file_path = f"/opt/airflow/data/{current_date}_weather_data.csv"
+
 
     print(f"Fetching data for {current_date}")
 
@@ -49,7 +50,8 @@ def main():
         weather_data.append(processed_data)
 
     df = pd.DataFrame(weather_data)
-    save_weather_data(df, output_file)
+    save_weather_data(df, file_path)
+    print(os.getcwd())
 
 if __name__ == "__main__":
     main()

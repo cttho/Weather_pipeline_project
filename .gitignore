@@ -1,2 +1,6 @@
 
 .env
+*.csv
+*.pyc
+*.log
+logs/scheduler/latest
