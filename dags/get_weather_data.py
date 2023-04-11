@@ -15,7 +15,7 @@ def fetch_weather_data(id_location, api_key):
         params={
             "id": id_location,
             "appid": api_key,
-            "units": "metric",
+            "units": "imperial",
             },
         )
     data = response.json()
