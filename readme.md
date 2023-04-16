@@ -20,3 +20,6 @@ The project aims to create an end-to-end data pipeline that fetches weather data
 - MongoDB: NoSQL database for storing weather data
 - Apache Airflow: Orchestration of data pipeline tasks
 - Power BI: Data visualization and reporting
+
+## Dashboard
+![weather dashboard](dashboard.png "Weather data dashboard")
