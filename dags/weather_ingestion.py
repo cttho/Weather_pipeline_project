@@ -14,16 +14,13 @@ MONGO_PASSWORD = os.environ['MONGO_INITDB_ROOT_PASSWORD']
 MONGO_DB = os.environ['MONGO_INITDB_DATABASE']
 MONGO_URI = f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@mongodb:27017/{MONGO_DB}"
 
-# Function to fetch weather data
-def fetch_weather_data():
-    url = f"http://api.openweathermap.org/data/2.5/weather?q=Ho%20Chi%20Minh%20City&appid={API_KEY}"
-    response = requests.get(url)
-    data = response.json()
-    return data
-
 # Function to convert Fahrenheit to Celsius
 def fahrenheit_to_celsius(fahrenheit_temp):
     return (fahrenheit_temp - 32) * 5 / 9
+
+def mph_to_mps(miles_per_hour):
+    meters_per_second = miles_per_hour * 0.44704
+    return meters_per_second
 
 # Function to process ingested weather data
 def process_data():
@@ -35,9 +32,10 @@ def process_data():
 
     # Process the data 
     df["temperature"] = df["temperature"].apply(fahrenheit_to_celsius)
+    df["wind_speed"] = df["wind_speed"].apply(mph_to_mps)
 
     # Save the processed data to a new JSON file
-    df.to_csv(output_file_path)
+    df.to_csv(output_file_path, index=False)
 
 
 # Function to store weather data in MongoDB
@@ -69,7 +67,7 @@ dag = DAG(
     default_args=default_args,
     description='Ingest weather data from OpenWeather API and store in MongoDB',
     schedule_interval=timedelta(hours=1),
-    start_date=datetime(2023, 4, 4),
+    start_date=datetime(2023, 4, 16),
     catchup=False
 )
 
