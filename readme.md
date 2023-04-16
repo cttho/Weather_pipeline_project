@@ -1,6 +1,7 @@
 # Weather Data Pipeline and Visualization Project
 
 This project is a data engineering and visualization solution that collects, processes, and visualizes weather data using Docker, MongoDB, Apache Airflow, and Power BI.
+![project pipeline](pipeline.png "Project pipeline")
 
 ## Overview
 
