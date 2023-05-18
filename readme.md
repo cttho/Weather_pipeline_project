@@ -5,7 +5,7 @@ This project is a data engineering and visualization solution that collects, pro
 
 ## Overview
 
-The project aims to create an end-to-end data pipeline that fetches weather data from the OpenWeather API, processes it using Spark, stores the results in MongoDB, and visualizes the data using Power BI. The pipeline is orchestrated using Apache Airflow, and all components are containerized using Docker.
+The project aims to create an end-to-end data pipeline that fetches weather data from the OpenWeather API, processes it using Python, stores the results in MongoDB, and visualizes the data using Power BI. The pipeline is orchestrated using Apache Airflow, and all components are containerized using Docker.
 
 ## Features
 
